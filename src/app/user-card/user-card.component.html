@@ -20,7 +20,10 @@
         <div class="low-temperature">{{ weather.daily.temperature_2m_min[0] }}{{ weather.daily_units.temperature_2m_min }}</div>
       </div>
       <div *ngIf="mapOptions" class="map-container">
-        <div class="leaflet-container" leaflet  [leafletOptions]="mapOptions"></div>
+        <div class="leaflet-container" leaflet 
+          [leafletOptions]="mapOptions"
+          [leafletLayer]="userMarker"
+        ></div>
       </div>
     </div>
     <ng-template #loading>

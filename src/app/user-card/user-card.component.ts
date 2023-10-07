@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subject, switchMap, takeUntil, timer } from 'rxjs';
-import { latLng, tileLayer, MapOptions } from 'leaflet';
+import { latLng, tileLayer, MapOptions, Layer, marker, icon } from 'leaflet';
 
-import { ApiLocation, User, WeatherResponse } from '../models';
+import { User, WeatherResponse } from '../models';
 
 import { WeatherApiService } from '../services/weather-api.service';
 import { StorageService } from '../services/storage.service';
@@ -19,6 +19,7 @@ export class UserCardComponent implements OnInit, OnDestroy {
   weather$ = new Subject<WeatherResponse>();
   weatherIconSrc: string;
   mapOptions: MapOptions;
+  userMarker: Layer;
 
   private updateIntervalMs = 5 * 60 * 1000; // 5 mins
   private destroy$ = new Subject<void>();
@@ -26,7 +27,7 @@ export class UserCardComponent implements OnInit, OnDestroy {
   constructor(private weatherApiService: WeatherApiService, private storageService: StorageService) {}
 
   ngOnInit() {
-    this.setMapOptions(this.user.location.coordinates);
+    this.setMapOptions();
     this.startWeatherPolling();
   }
 
@@ -49,14 +50,22 @@ export class UserCardComponent implements OnInit, OnDestroy {
     });
   }
 
-  private setMapOptions(coordinates: ApiLocation['coordinates']) {
+  private setMapOptions() {
+    let lat = parseFloat(this.user.location.coordinates.latitude);
+    let lng = parseFloat(this.user.location.coordinates.longitude);
     this.mapOptions = {
       layers: [
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' }),
       ],
       zoom: 5,
-      center: latLng(parseFloat(coordinates.latitude), parseFloat(coordinates.longitude))
+      center: latLng(lat, lng)
     };
+    this.userMarker = marker([ lat, lng ], {
+       icon: icon({
+        iconUrl: this.user.picture.large,
+        iconSize: [30, 30],
+       })
+    });
   }
 
   private mapWeatherCodeToImageSource(code: number): string {
