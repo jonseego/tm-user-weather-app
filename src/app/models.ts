@@ -52,6 +52,8 @@ interface ApiName {
 
 interface ApiPicture {
   large: string;
+  medium: string;
+  thumbnail: string;
 }
 
 //111 convert to enum or map?
