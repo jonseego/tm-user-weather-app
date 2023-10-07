@@ -7,7 +7,7 @@ import { StorageService } from '../services/storage.service';
   templateUrl: './saved-users.component.html',
   styleUrls: ['./saved-users.component.scss']
 })
-export class SavedUsersComponent {//111 next, plus on push?
+export class SavedUsersComponent {
 
   users = this.storageService.getUsers();
 

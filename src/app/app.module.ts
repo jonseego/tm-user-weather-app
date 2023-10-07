@@ -11,15 +11,15 @@ import { UsersApiService } from './services/users-api.service';
 import { WeatherApiService } from './services/weather-api.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserCardComponent } from './user-card/user-card.component';
-import { RandomUserCardComponent } from './random-user-card/random-user-card.component';
 import { SavedUsersComponent } from './saved-users/saved-users.component';
+import { RandomUsersComponent } from './random-users/random-users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserCardComponent,
-    RandomUserCardComponent,
-    SavedUsersComponent
+    SavedUsersComponent,
+    RandomUsersComponent
   ],
   imports: [
     BrowserModule,

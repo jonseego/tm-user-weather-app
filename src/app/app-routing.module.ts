@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { RandomUserCardComponent } from './random-user-card/random-user-card.component';
 import { SavedUsersComponent } from './saved-users/saved-users.component';
+import { RandomUsersComponent } from './random-users/random-users.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'user', pathMatch: 'full' },
-  { path: 'user', component: RandomUserCardComponent },
-  { path: 'users', component: SavedUsersComponent },
-  { path: '**', redirectTo: 'user', pathMatch: 'full' },
+  { path: '', redirectTo: 'users/random', pathMatch: 'full' },
+  { path: 'users/random', component: RandomUsersComponent },
+  { path: 'users/saved', component: SavedUsersComponent },
+  { path: '**', redirectTo: 'users/random', pathMatch: 'full' },
 ];
 
 @NgModule({

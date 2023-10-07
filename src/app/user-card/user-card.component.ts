@@ -1,6 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Subject, take } from 'rxjs';
-// import { ChangeDetectionStrategy } from '@angular/compiler';//111
 
 import { User, WeatherResponse } from '../models';
 
@@ -11,11 +10,10 @@ import { StorageService } from '../services/storage.service';
   selector: 'app-user-card',
   templateUrl: './user-card.component.html',
   styleUrls: ['./user-card.component.scss'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,//111 causing compile error
 })
 export class UserCardComponent implements OnInit {
   @Input({ required: true }) user: User;
-  @Input() canSave = true;
+  @Input({ required: true }) canSave: boolean;
 
   weather$ = new Subject<WeatherResponse>();
   weatherIconSrc: string;
