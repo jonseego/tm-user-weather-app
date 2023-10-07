@@ -1,10 +1,11 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Observable, Subject, take } from 'rxjs';
+import { Subject, take } from 'rxjs';
 // import { ChangeDetectionStrategy } from '@angular/compiler';//111
 
 import { User, WeatherResponse } from '../models';
 
-import { WeatherApiService } from '../api/weather-api.service';
+import { WeatherApiService } from '../services/weather-api.service';
+import { StorageService } from '../services/storage.service';
 
 @Component({
   selector: 'app-user-card',
@@ -18,7 +19,7 @@ export class UserCardComponent implements OnInit {
   weather$ = new Subject<WeatherResponse>();
   weatherIconSrc: string;
 
-  constructor(private weatherApiService: WeatherApiService) {}
+  constructor(private weatherApiService: WeatherApiService, private storageService: StorageService) {}
 
   ngOnInit() {
     this.weatherApiService.getWeather(this.user.location.coordinates).pipe(take(1)).subscribe((weather) => {
@@ -27,8 +28,9 @@ export class UserCardComponent implements OnInit {
     });
   }
 
-  saveUserInfo() {//111 next
-    localStorage.setItem(this.getUserKey(), JSON.stringify(this.user));
+  saveUserInfo() {
+    this.storageService.addUser(this.user);
+    console.log('users: ', this.storageService.getUsers());//111
   }
 
   private mapWeatherCodeToImageSource(code: number): string {
@@ -60,10 +62,6 @@ export class UserCardComponent implements OnInit {
       return 'assets/img/hail.png';
     }
     return 'assets/img/sunny.png';
-  }
-
-  private getUserKey(): string {
-    return this.user.email;
   }
 
 }

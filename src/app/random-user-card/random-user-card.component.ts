@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { UsersApiService } from '../api/users-api.service';
+import { UsersApiService } from '../services/users-api.service';
 
 @Component({
   selector: 'app-random-user-card',

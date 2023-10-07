@@ -7,17 +7,19 @@ import { MatCardModule } from '@angular/material/card';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { UsersApiService } from './api/users-api.service';
-import { WeatherApiService } from './api/weather-api.service';
+import { UsersApiService } from './services/users-api.service';
+import { WeatherApiService } from './services/weather-api.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { UserCardComponent } from './user-card/user-card.component';
 import { RandomUserCardComponent } from './random-user-card/random-user-card.component';
+import { SavedUsersComponent } from './saved-users/saved-users.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UserCardComponent,
-    RandomUserCardComponent
+    RandomUserCardComponent,
+    SavedUsersComponent
   ],
   imports: [
     BrowserModule,
