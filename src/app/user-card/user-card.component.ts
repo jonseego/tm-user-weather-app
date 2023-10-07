@@ -15,6 +15,7 @@ import { StorageService } from '../services/storage.service';
 })
 export class UserCardComponent implements OnInit {
   @Input({ required: true }) user: User;
+  @Input() canSave = true;
 
   weather$ = new Subject<WeatherResponse>();
   weatherIconSrc: string;

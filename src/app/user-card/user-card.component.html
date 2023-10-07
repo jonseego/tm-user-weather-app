@@ -15,7 +15,7 @@
         </div>
       </div>
       <div class="weather-info-row">
-        <div>{{ weather.daily.temperature_2m_max[0] }}{{ weather.daily_units.temperature_2m_max }}</div>
+        <div class="high-temperature">{{ weather.daily.temperature_2m_max[0] }}{{ weather.daily_units.temperature_2m_max }}</div>
         <div>|</div>
         <div class="low-temperature">{{ weather.daily.temperature_2m_min[0] }}{{ weather.daily_units.temperature_2m_min }}</div>
       </div>
@@ -25,7 +25,7 @@
       <div>{{ user.location.city }}, {{ user.location.state }}, {{ user.location.country }}</div>
     </div>
   </mat-card-content>
-  <mat-card-actions>
+  <mat-card-actions *ngIf="canSave">
     <button mat-stroked-button color="primary" (click)="saveUserInfo()">Save</button>
   </mat-card-actions>
 </mat-card>

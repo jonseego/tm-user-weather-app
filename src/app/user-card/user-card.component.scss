@@ -1,8 +1,3 @@
-//111 need desktop/tablet/mobile support
-.user-card {
-  max-width: 400px;
-}
-
 .weather-info-row {
   display: flex;
   flex-direction: row;
@@ -28,4 +23,20 @@
 
 mat-card-actions {
   justify-content: center;
+}
+
+.user-card {
+  width: 400px;
+}
+
+@media only screen and (max-width: 400px) {
+  .user-card {
+    width: 320px;
+  }
+  mat-card-title, .current-temperature {
+    font-size: 1rem;
+  }
+  mat-card-subtitle, .low-temperature, .high-temperature, .location-container {
+    font-size: 0.75rem;
+  }
 }
