@@ -27,6 +27,10 @@ export class UserCardComponent implements OnInit {
     });
   }
 
+  saveUserInfo() {//111 next
+    localStorage.setItem(this.getUserKey(), JSON.stringify(this.user));
+  }
+
   private mapWeatherCodeToImageSource(code: number): string {
     //111 switch to svg for better scaling display
     // source for weather codes: https://open-meteo.com/en/docs 
@@ -57,4 +61,9 @@ export class UserCardComponent implements OnInit {
     }
     return 'assets/img/sunny.png';
   }
+
+  private getUserKey(): string {
+    return this.user.email;
+  }
+
 }

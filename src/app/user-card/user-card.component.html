@@ -11,13 +11,13 @@
       <div class="weather-info-row">
         <img [src]="weatherIconSrc" />
         <div class="current-temperature">
-          {{ weather.current_weather.temperature }} {{ weather.current_weather_units.temperature }}
+          {{ weather.current_weather.temperature }}{{ weather.current_weather_units.temperature }}
         </div>
       </div>
       <div class="weather-info-row">
-        <div>{{ weather.daily.temperature_2m_max[0] }} {{ weather.daily_units.temperature_2m_max }}</div>
+        <div>{{ weather.daily.temperature_2m_max[0] }}{{ weather.daily_units.temperature_2m_max }}</div>
         <div>|</div>
-        <div class="low-temperature">{{ weather.daily.temperature_2m_min[0] }} {{ weather.daily_units.temperature_2m_min }}</div>
+        <div class="low-temperature">{{ weather.daily.temperature_2m_min[0] }}{{ weather.daily_units.temperature_2m_min }}</div>
       </div>
     </div>
     <div class="location-container">
@@ -26,8 +26,7 @@
     </div>
   </mat-card-content>
   <!-- //111 user actions here? -->
-  <!-- <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
-  </mat-card-actions> -->
+  <mat-card-actions>
+    <button mat-stroked-button color="primary" (click)="saveUserInfo()">Save</button>
+  </mat-card-actions>
 </mat-card>
