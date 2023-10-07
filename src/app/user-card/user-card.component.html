@@ -2,13 +2,20 @@
   <mat-card-header>
     <img mat-card-avatar [src]="user.picture.large">
     <mat-card-title>{{ user.name.title }}. {{ user.name.first }} {{ user.name.last }}</mat-card-title>
-    <mat-card-subtitle>{{ user.gender | titlecase }}</mat-card-subtitle>
+    <mat-card-subtitle>
+      {{ user.gender | titlecase }} | {{ user.email }}
+    </mat-card-subtitle>
   </mat-card-header>
   <mat-card-content>
+    <div>{{ user.location.street.number }} {{ user.location.street.name }}</div>
+    <div>{{ user.location.city }}, {{ user.location.state }}, {{ user.location.country }}</div>
     <!-- //111 weather info here? -->
-    <ng-container *ngIf="weather$ | async as weather">
-      Weather Code: {{ weather.current_weather.weathercode }}
-    </ng-container>
+    <div *ngIf="weather$ | async as weather">
+      <img [src]="weatherIconSrc" />
+      <div>Current: {{ weather.current_weather.temperature }} {{ weather.current_weather_units.temperature }}</div>
+      <div>High Today: {{ weather.daily.temperature_2m_max[0] }} {{ weather.daily_units.temperature_2m_max }}</div>
+      <div>Low Today: {{ weather.daily.temperature_2m_min[0] }} {{ weather.daily_units.temperature_2m_min }}</div>
+    </div>
   </mat-card-content>
   <!-- //111 user actions here? -->
   <!-- <mat-card-actions>

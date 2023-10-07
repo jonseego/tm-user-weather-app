@@ -32,6 +32,10 @@ export interface ApiLocation {
 export interface WeatherResponse {
   current_weather: {
     weathercode: number; // WMO code
+    temperature: number;
+  };
+  current_weather_units: {
+    temperature: string;// e.g. "°C"
   };
   daily: {
     temperature_2m_max: number[]; // e.g. [17.3, 15.8]
