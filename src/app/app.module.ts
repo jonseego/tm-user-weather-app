@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card';
@@ -31,7 +32,11 @@ import { RandomUsersComponent } from './random-users/random-users.component';
     MatCardModule,
     MatProgressSpinnerModule
   ],
-  providers: [UsersApiService, WeatherApiService],
+  providers: [
+    UsersApiService, 
+    WeatherApiService,
+    { provide: LocationStrategy, useClass: HashLocationStrategy }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
