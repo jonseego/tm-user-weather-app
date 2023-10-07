@@ -35,34 +35,42 @@ export class UserCardComponent implements OnInit {
   }
 
   private mapWeatherCodeToImageSource(code: number): string {
-    //111 switch to svg for better scaling display
     // source for weather codes: https://open-meteo.com/en/docs 
-    // source for icons: https://www.iconfinder.com/
+    // source for icons: https://www.iconfinder.com/weather-icons?price=free
     if (code === 0) {
-      return 'assets/img/sunny.png';
+      return 'assets/img/clear.svg';
     }
-    if ([1,2,3].includes(code)) {
-      return 'assets/img/partly_cloudy.png';
+    if (code === 1) {
+      return 'assets/img/mainly_clear.svg';
+    }
+    if (code === 2) {
+      return 'assets/img/partly_cloudy.svg';
+    }
+    if (code === 3) {
+      return 'assets/img/overcast.svg';
     }
     if ([45,48].includes(code)) {
-      return 'assets/img/foggy.png';
+      return 'assets/img/foggy.svg';
     }
     if ([51,53,55,56,57].includes(code)) {
-      return 'assets/img/drizzle.png';
+      return 'assets/img/drizzle.svg';
     }
     if ([61,63,65,66,67,80,81,82].includes(code)) {
-      return 'assets/img/rain.png';
+      return 'assets/img/rain.svg';
     }
-    if ([71,73,75,77,85,86].includes(code)) {
-      return 'assets/img/snowy.png';
+    if ([71].includes(code)) {
+      return 'assets/img/snow_light.svg';
+    }
+    if ([73,75,77,85,86].includes(code)) {
+      return 'assets/img/snow_heavy.svg';
     }
     if (code === 95) {
-      return 'assets/img/thunderstorm.png';
+      return 'assets/img/thunderstorm.svg';
     }
     if ([96,99].includes(code)) {
-      return 'assets/img/hail.png';
+      return 'assets/img/hail.svg';
     }
-    return 'assets/img/sunny.png';
+    return 'assets/img/question.svg';
   }
 
 }

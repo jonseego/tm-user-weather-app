@@ -9,7 +9,7 @@
   <mat-card-content class="content">
     <div *ngIf="weather$ | async as weather">
       <div class="weather-info-row">
-        <img [src]="weatherIconSrc" />
+        <img class="weather-icon" [src]="weatherIconSrc" />
         <div class="current-temperature">
           {{ weather.current_weather.temperature }}{{ weather.current_weather_units.temperature }}
         </div>

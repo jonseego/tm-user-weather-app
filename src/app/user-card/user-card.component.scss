@@ -29,9 +29,16 @@ mat-card-actions {
   width: 400px;
 }
 
+.weather-icon {
+  width: 50px;
+}
+
 @media only screen and (max-width: 400px) {
   .user-card {
     width: 320px;
+  }
+  .weather-icon {
+    width: 40px;
   }
   mat-card-title, .current-temperature {
     font-size: 1rem;
