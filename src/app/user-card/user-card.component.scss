@@ -21,6 +21,13 @@
   text-align: center;
 }
 
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 70px;
+}
+
 mat-card-actions {
   justify-content: center;
 }
@@ -39,6 +46,9 @@ mat-card-actions {
   }
   .weather-icon {
     width: 40px;
+  }
+  .spinner-container {
+    height: 60px;
   }
   mat-card-title, .current-temperature {
     font-size: 1rem;
