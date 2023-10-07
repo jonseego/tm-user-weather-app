@@ -29,7 +29,6 @@ export class UserCardComponent implements OnInit {
 
   saveUserInfo() {
     this.storageService.addUser(this.user);
-    console.log('users: ', this.storageService.getUsers());//111
   }
 
   private mapWeatherCodeToImageSource(code: number): string {

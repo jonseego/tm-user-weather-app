@@ -12,7 +12,6 @@ export class UsersApiService {
   constructor(private http: HttpClient) { }
 
   getRandomUser(): Observable<User> {
-    //111 error handling
     return this.http.get<UserResponse>('https://randomuser.me/api/').pipe(
       map((response) => response.results[0])
     );
