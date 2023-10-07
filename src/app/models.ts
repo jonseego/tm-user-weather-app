@@ -17,7 +17,7 @@ export interface ApiLocation {
     longitude: string;
   };
   country: string;
-  postalcode: number;
+  postcode: number;
   state: string;
   street: {
     number: number;
