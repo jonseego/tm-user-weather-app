@@ -1,5 +1,12 @@
 # TmUserWeatherApp
 
+This application can be used to:
+
+1. Display random persons' details and related weather information using the route `<base_url>/#/users/random`. To save a person's details into the browser's local storage, click the `Save` button.
+
+2. Display saved persons' details and related weather information using the route `<base_url>/#/users/saved`
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.5.
 
 ## Development server
