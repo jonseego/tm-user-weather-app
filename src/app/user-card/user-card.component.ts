@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Subject, take, takeUntil, timer } from 'rxjs';
+import { Subject, switchMap, takeUntil, timer } from 'rxjs';
 
 import { User, WeatherResponse } from '../models';
 
@@ -24,11 +24,12 @@ export class UserCardComponent implements OnInit, OnDestroy {
   constructor(private weatherApiService: WeatherApiService, private storageService: StorageService) {}
 
   ngOnInit() {
-    timer(0, this.updateIntervalMs).pipe(takeUntil(this.destroy$)).subscribe(() => {
-      this.weatherApiService.getWeather(this.user.location.coordinates).pipe(take(1)).subscribe((weather) => {
-        this.weather$.next(weather);
-        this.weatherIconSrc = this.mapWeatherCodeToImageSource(weather.current_weather.weathercode);
-      });
+    timer(0, this.updateIntervalMs).pipe(
+      switchMap(() => this.weatherApiService.getWeather(this.user.location.coordinates)),
+      takeUntil(this.destroy$)
+    ).subscribe((weather) => {
+      this.weather$.next(weather);
+      this.weatherIconSrc = this.mapWeatherCodeToImageSource(weather.current_weather.weathercode);
     });
   }
 

@@ -13,7 +13,11 @@ export class WeatherApiService {
 
   getWeather(coordinates: ApiLocation['coordinates']): Observable<WeatherResponse> {
     return this.http.get<WeatherResponse>(`
-      https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}&longitude=${coordinates.longitude}&current_weather=true&daily=temperature_2m_max,temperature_2m_min&timezone=GMT
-    `);
+      https://api.open-meteo.com/v1/forecast?latitude=${coordinates.latitude}`
+      +`&longitude=${coordinates.longitude}`
+      +`&forecast_days=1`
+      +`&current_weather=true`
+      +`&daily=temperature_2m_max,temperature_2m_min`
+      +`&timezone=GMT`);
   }
 }
