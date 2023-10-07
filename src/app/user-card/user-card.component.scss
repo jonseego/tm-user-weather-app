@@ -2,3 +2,24 @@
 .user-card {
   max-width: 400px;
 }
+
+.weather-info-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
+}
+
+.current-temperature {
+  font-size: 1.25rem;
+  font-weight: 500;
+}
+
+.low-temperature {
+  color: #70757a
+}
+
+.location-container {
+  margin-top: 0.5rem;
+}

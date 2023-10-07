@@ -6,15 +6,23 @@
       {{ user.gender | titlecase }} | {{ user.email }}
     </mat-card-subtitle>
   </mat-card-header>
-  <mat-card-content>
-    <div>{{ user.location.street.number }} {{ user.location.street.name }}</div>
-    <div>{{ user.location.city }}, {{ user.location.state }}, {{ user.location.country }}</div>
-    <!-- //111 weather info here? -->
+  <mat-card-content class="content">
     <div *ngIf="weather$ | async as weather">
-      <img [src]="weatherIconSrc" />
-      <div>Current: {{ weather.current_weather.temperature }} {{ weather.current_weather_units.temperature }}</div>
-      <div>High Today: {{ weather.daily.temperature_2m_max[0] }} {{ weather.daily_units.temperature_2m_max }}</div>
-      <div>Low Today: {{ weather.daily.temperature_2m_min[0] }} {{ weather.daily_units.temperature_2m_min }}</div>
+      <div class="weather-info-row">
+        <img [src]="weatherIconSrc" />
+        <div class="current-temperature">
+          {{ weather.current_weather.temperature }} {{ weather.current_weather_units.temperature }}
+        </div>
+      </div>
+      <div class="weather-info-row">
+        <div>{{ weather.daily.temperature_2m_max[0] }} {{ weather.daily_units.temperature_2m_max }}</div>
+        <div>|</div>
+        <div class="low-temperature">{{ weather.daily.temperature_2m_min[0] }} {{ weather.daily_units.temperature_2m_min }}</div>
+      </div>
+    </div>
+    <div class="location-container">
+      <div>{{ user.location.street.number }} {{ user.location.street.name }}</div>
+      <div>{{ user.location.city }}, {{ user.location.state }}, {{ user.location.country }}</div>
     </div>
   </mat-card-content>
   <!-- //111 user actions here? -->

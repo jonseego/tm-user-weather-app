@@ -24,7 +24,6 @@ export class UserCardComponent implements OnInit {
     this.weatherApiService.getWeather(this.user.location.coordinates).pipe(take(1)).subscribe((weather) => {
       this.weather$.next(weather);
       this.weatherIconSrc = this.mapWeatherCodeToImageSource(weather.current_weather.weathercode);
-      console.log('weatherIconSrc: ', this.weatherIconSrc);//111
     });
   }
 
