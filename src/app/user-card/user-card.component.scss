@@ -15,8 +15,11 @@
   color: #70757a
 }
 
+.map-container {
+  padding: 0.5rem 0;
+}
+
 .location-container {
-  margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   text-align: center;
 }
@@ -25,10 +28,11 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 70px;
+  height: 236px;
 }
 
 mat-card-actions {
+  padding: 1rem;
   justify-content: center;
 }
 
@@ -40,6 +44,12 @@ mat-card-actions {
   width: 50px;
 }
 
+.leaflet-container {
+  height: 150px;
+  width: 300px;
+  margin: auto;
+}
+
 @media only screen and (max-width: 400px) {
   .user-card {
     width: 320px;
@@ -47,10 +57,15 @@ mat-card-actions {
   .weather-icon {
     width: 40px;
   }
-  .spinner-container {
-    height: 60px;
+  .leaflet-container {
+    height: 160px;
+    width: 280px;
+    margin: auto;
   }
-  mat-card-title, .current-temperature {
+  .spinner-container {
+    height: 235px;
+  }
+  mat-card-title {
     font-size: 1rem;
   }
   mat-card-subtitle, .low-temperature, .high-temperature, .location-container {

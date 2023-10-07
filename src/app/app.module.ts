@@ -6,6 +6,8 @@ import { MatButtonModule } from '@angular/material/button'
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
+import { LeafletModule } from '@asymmetrik/ngx-leaflet';
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -28,6 +30,7 @@ import { RandomUsersComponent } from './random-users/random-users.component';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    LeafletModule,
     MatButtonModule,
     MatCardModule,
     MatProgressSpinnerModule

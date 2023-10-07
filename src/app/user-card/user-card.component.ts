@@ -1,7 +1,8 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Subject, switchMap, takeUntil, timer } from 'rxjs';
+import { latLng, tileLayer, MapOptions } from 'leaflet';
 
-import { User, WeatherResponse } from '../models';
+import { ApiLocation, User, WeatherResponse } from '../models';
 
 import { WeatherApiService } from '../services/weather-api.service';
 import { StorageService } from '../services/storage.service';
@@ -17,6 +18,7 @@ export class UserCardComponent implements OnInit, OnDestroy {
 
   weather$ = new Subject<WeatherResponse>();
   weatherIconSrc: string;
+  mapOptions: MapOptions;
 
   private updateIntervalMs = 5 * 60 * 1000; // 5 mins
   private destroy$ = new Subject<void>();
@@ -24,13 +26,8 @@ export class UserCardComponent implements OnInit, OnDestroy {
   constructor(private weatherApiService: WeatherApiService, private storageService: StorageService) {}
 
   ngOnInit() {
-    timer(0, this.updateIntervalMs).pipe(
-      switchMap(() => this.weatherApiService.getWeather(this.user.location.coordinates)),
-      takeUntil(this.destroy$)
-    ).subscribe((weather) => {
-      this.weather$.next(weather);
-      this.weatherIconSrc = this.mapWeatherCodeToImageSource(weather.current_weather.weathercode);
-    });
+    this.setMapOptions(this.user.location.coordinates);
+    this.startWeatherPolling();
   }
 
   ngOnDestroy() {
@@ -40,6 +37,26 @@ export class UserCardComponent implements OnInit, OnDestroy {
 
   saveUserInfo() {
     this.storageService.addUser(this.user);
+  }
+
+  private startWeatherPolling() {
+    timer(0, this.updateIntervalMs).pipe(
+      switchMap(() => this.weatherApiService.getWeather(this.user.location.coordinates)),
+      takeUntil(this.destroy$)
+    ).subscribe((weather) => {
+      this.weather$.next(weather);
+      this.weatherIconSrc = this.mapWeatherCodeToImageSource(weather.current_weather.weathercode);
+    });
+  }
+
+  private setMapOptions(coordinates: ApiLocation['coordinates']) {
+    this.mapOptions = {
+      layers: [
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
+      ],
+      zoom: 5,
+      center: latLng(parseFloat(coordinates.latitude), parseFloat(coordinates.longitude))
+    };
   }
 
   private mapWeatherCodeToImageSource(code: number): string {

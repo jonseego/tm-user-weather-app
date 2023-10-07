@@ -19,10 +19,13 @@
         <div>|</div>
         <div class="low-temperature">{{ weather.daily.temperature_2m_min[0] }}{{ weather.daily_units.temperature_2m_min }}</div>
       </div>
+      <div *ngIf="mapOptions" class="map-container">
+        <div class="leaflet-container" leaflet  [leafletOptions]="mapOptions"></div>
+      </div>
     </div>
     <ng-template #loading>
       <div class="spinner-container">
-        <mat-spinner [diameter]="40"></mat-spinner>
+        <mat-spinner [diameter]="60"></mat-spinner>
       </div>
     </ng-template>
     <div class="location-container">
