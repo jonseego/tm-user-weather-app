@@ -27,6 +27,7 @@ describe('UserCardComponent', () => {
     fixture = TestBed.createComponent(UserCardComponent);
     component = fixture.componentInstance;
     component.user = mockUser;
+    component.canSave = true;
     fixture.detectChanges();
   });
 

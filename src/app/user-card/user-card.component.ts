@@ -37,16 +37,21 @@ export class UserCardComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.setMapOptions();
     this.setNumHoursDisplay();
-    this.startWeatherPolling();
+    if (this.canSave) {
+      this.startWeatherPolling();
+    } else {
+      this.setWeatherFromStorage()
+    }
   }
 
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
   }
-//111 ng test final
-  saveUserInfo() {//111 include weather?
+
+  saveCardDetails() {
     this.storageService.addUser(this.user);
+    this.storageService.addWeatherForUser(this.weather$.value as WeatherResponse, this.user);
   }
 
   getPrevHoursTemperatures() {
@@ -64,10 +69,20 @@ export class UserCardComponent implements OnInit, OnDestroy {
       switchMap(() => this.weatherApiService.getWeather(this.user.location.coordinates)),
       takeUntil(this.destroy$)
     ).subscribe((weather) => {
-      this.weather$.next(weather);
-      this.weatherIconSrc = this.mapWeatherCodeToImageSource(weather.current_weather.weathercode);
-      this.setHourInfo(weather);
+      this.setWeatherInfo(weather);
     });
+  }
+
+  private setWeatherFromStorage() {
+    const map = this.storageService.getUserWeatherMap();
+    const weather = map[this.storageService.getUserKey(this.user)];
+    this.setWeatherInfo(weather);
+  }
+
+  private setWeatherInfo(weather: WeatherResponse) {
+    this.weather$.next(weather);
+    this.weatherIconSrc = this.mapWeatherCodeToImageSource(weather.current_weather.weathercode);
+    this.setHourInfo(weather);
   }
 
   private setHourInfo(weather: WeatherResponse) {

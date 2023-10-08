@@ -1,16 +1,20 @@
 import { Injectable } from '@angular/core';
 
-import { User } from '../models';
+import { User, UserWeatherMap, WeatherResponse } from '../models';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StorageService {
-  private readonly key = "tm-user-weather-app";
+  private readonly usersKey = "tm-user-weather-app-users";
+  private readonly weatherMapKey = "tm-user-weather-app-weather-map";
 
   constructor() {
-    if (!localStorage.getItem(this.key)) {
-      localStorage.setItem(this.key, JSON.stringify([]));
+    if (!localStorage.getItem(this.usersKey)) {
+      localStorage.setItem(this.usersKey, JSON.stringify([]));
+    }
+    if (!localStorage.getItem(this.weatherMapKey)) {
+      localStorage.setItem(this.weatherMapKey, JSON.stringify({}));
     }
   }
 
@@ -26,15 +30,29 @@ export class StorageService {
     this.setUsers(users);
   }
 
+  addWeatherForUser(weather: WeatherResponse, user: User) {
+    const userWeatherMap = this.getUserWeatherMap();
+    userWeatherMap[this.getUserKey(user)] = weather;
+    this.setUserWeatherMap(userWeatherMap);
+  }
+
   getUsers(): User[] {
-    return JSON.parse(localStorage.getItem(this.key) || '[]');
+    return JSON.parse(localStorage.getItem(this.usersKey) || '[]');
+  }
+
+  getUserWeatherMap(): UserWeatherMap {
+    return JSON.parse(localStorage.getItem(this.weatherMapKey) || '{}');
+  }
+
+  getUserKey(user: User): string {
+    return user.email;
   }
 
   private setUsers(users: User[]) {
-    localStorage.setItem(this.key, JSON.stringify(users));
+    localStorage.setItem(this.usersKey, JSON.stringify(users));
   }
 
-  private getUserKey(user: User): string {
-    return user.email;
+  private setUserWeatherMap(map: UserWeatherMap) {
+    localStorage.setItem(this.weatherMapKey, JSON.stringify(map));
   }
 }

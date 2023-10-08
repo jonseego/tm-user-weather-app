@@ -30,6 +30,8 @@ export interface ApiLocation {
 }
 
 export interface WeatherResponse {
+  latitude: number;
+  longitude: number;
   current_weather: {
     weathercode: number; // WMO code
     temperature: number;
@@ -54,6 +56,8 @@ export interface WeatherResponse {
     temperature_2m: string; // e.g. "°C"
   };
 }
+
+export type UserWeatherMap = { [key: string]: WeatherResponse };
 
 interface ApiName {
   title: string;
