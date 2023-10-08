@@ -6,13 +6,34 @@
   gap: 0.25rem;
 }
 
+.weather-hour-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 0.75rem;
+  line-height: 0.75rem;
+  padding: 0 0.25rem; 
+ 
+  .temperature {
+    font-weight: 500 ;
+  }
+  .time {
+    color: #70757a;
+    font-size: 0.6rem;
+  }
+}
+
+.hour-info-row {
+  flex-wrap: wrap;
+}
+
 .current-temperature {
   font-size: 1.25rem;
   font-weight: 500;
 }
 
 .low-temperature {
-  color: #70757a
+  color: #70757a;
 }
 
 .map-container {

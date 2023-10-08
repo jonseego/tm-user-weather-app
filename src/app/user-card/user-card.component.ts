@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
-import { Subject, switchMap, takeUntil, timer } from 'rxjs';
+import { BreakpointObserver } from '@angular/cdk/layout';
+import { BehaviorSubject, Subject, map, switchMap, take, takeUntil, timer } from 'rxjs';
 import { latLng, tileLayer, MapOptions, Layer, marker, icon } from 'leaflet';
 
 import { User, WeatherResponse } from '../models';
@@ -16,18 +17,26 @@ export class UserCardComponent implements OnInit, OnDestroy {
   @Input({ required: true }) user: User;
   @Input({ required: true }) canSave: boolean;
 
-  weather$ = new Subject<WeatherResponse>();
+  weather$ = new BehaviorSubject<WeatherResponse | undefined>(undefined);
   weatherIconSrc: string;
   mapOptions: MapOptions;
   userMarker: Layer;
+  hourRowInfo$ = new BehaviorSubject<WeatherResponse['hourly'] | undefined>(undefined);
+  hrStartIndex = 0;
+  numHourDisplays: number;
 
   private updateIntervalMs = 5 * 60 * 1000; // 5 mins
   private destroy$ = new Subject<void>();
 
-  constructor(private weatherApiService: WeatherApiService, private storageService: StorageService) {}
+  constructor(
+    private weatherApiService: WeatherApiService, 
+    private storageService: StorageService,
+    private breakpointObserver: BreakpointObserver,
+  ) {}
 
   ngOnInit() {
     this.setMapOptions();
+    this.setNumHoursDisplay();
     this.startWeatherPolling();
   }
 
@@ -35,9 +44,19 @@ export class UserCardComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
-
-  saveUserInfo() {
+//111 ng test final
+  saveUserInfo() {//111 include weather?
     this.storageService.addUser(this.user);
+  }
+
+  getPrevHoursTemperatures() {
+    this.hrStartIndex = this.hrStartIndex - this.numHourDisplays;
+    this.setHourInfo(this.weather$.value as WeatherResponse);
+  }
+
+  getNextHoursTemperatures() {
+    this.hrStartIndex = this.hrStartIndex + this.numHourDisplays;
+    this.setHourInfo(this.weather$.value as WeatherResponse);
   }
 
   private startWeatherPolling() {
@@ -47,6 +66,14 @@ export class UserCardComponent implements OnInit, OnDestroy {
     ).subscribe((weather) => {
       this.weather$.next(weather);
       this.weatherIconSrc = this.mapWeatherCodeToImageSource(weather.current_weather.weathercode);
+      this.setHourInfo(weather);
+    });
+  }
+
+  private setHourInfo(weather: WeatherResponse) {
+    this.hourRowInfo$.next({
+      temperature_2m: weather.hourly.temperature_2m.slice(this.hrStartIndex, this.hrStartIndex + this.numHourDisplays),
+      time: weather.hourly.time.slice(this.hrStartIndex, this.hrStartIndex + this.numHourDisplays),
     });
   }
 
@@ -65,6 +92,13 @@ export class UserCardComponent implements OnInit, OnDestroy {
         iconUrl: this.user.picture.large,
         iconSize: [30, 30],
        })
+    });
+  }
+
+  private setNumHoursDisplay() {
+    const isMobile$ = this.breakpointObserver.observe([`(max-width: 400px)`]).pipe(map(({ matches }) => matches));
+    isMobile$.pipe(take(1)).subscribe((isMobile) => {
+      this.numHourDisplays = isMobile ? 3 : 4;
     });
   }
 

@@ -18,6 +18,7 @@ export class WeatherApiService {
       +`&forecast_days=1`
       +`&current_weather=true`
       +`&daily=temperature_2m_max,temperature_2m_min`
+      +`&hourly=temperature_2m`
       +`&timezone=GMT`);
   }
 }

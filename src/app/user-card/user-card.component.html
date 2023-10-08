@@ -9,10 +9,25 @@
   <mat-card-content class="content">
     <div *ngIf="weather$ | async as weather; else loading">
       <div class="weather-info-row">
+        {{ weather.current_weather.time | date:'MMM d, y, h:mm a' }}
+      </div>
+      <div class="weather-info-row">
         <img class="weather-icon" [src]="weatherIconSrc" />
         <div class="current-temperature">
           {{ weather.current_weather.temperature }}{{ weather.current_weather_units.temperature }}
         </div>
+      </div>
+      <div *ngIf="hourRowInfo$ | async as info" class="weather-info-row hour-info-row">
+        <button mat-icon-button [disabled]="hrStartIndex === 0" (click)="getPrevHoursTemperatures()">
+          <mat-icon>arrow_circle_left</mat-icon>
+        </button>
+        <div class="weather-hour-info" *ngFor="let hrTemperature of info.temperature_2m; index as i">
+          <span class="temperature">{{ hrTemperature }}{{ weather.hourly_units.temperature_2m}}</span>
+          <span class="time">{{ info.time[i] | date:'h aaa' }}</span>
+        </div>
+        <button mat-icon-button [disabled]="hrStartIndex === (24 - numHourDisplays)" (click)="getNextHoursTemperatures()">
+          <mat-icon>arrow_circle_right</mat-icon>
+        </button>
       </div>
       <div class="weather-info-row">
         <div class="high-temperature">{{ weather.daily.temperature_2m_max[0] }}{{ weather.daily_units.temperature_2m_max }}</div>
